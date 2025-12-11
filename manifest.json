@@ -1,0 +1,16 @@
+{
+  "name": "LEGO Game Boy - Retro-Go",
+  "version": "1.0.0",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "https://oviteck.nl/lego-gameboy.img",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

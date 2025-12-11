@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEGO Game Boy Flasher - 0v1Tech</title>
+    <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step h3 {
+            color: #2d3436;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .flash-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 15px;
+        }
+
+        esp-web-install-button {
+            display: inline-block;
+        }
+
+        esp-web-install-button button {
+            padding: 20px 50px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        esp-web-install-button button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning strong {
+            color: #856404;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .requirements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .requirement {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .requirement .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            esp-web-install-button button {
+                padding: 15px 30px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="emoji">🎮</div>
+            <h1>LEGO Game Boy Flasher</h1>
+            <p>Flash je ESP32-S3 met Retro-Go firmware</p>
+        </div>
+
+        <div class="content">
+            <h2>Wat heb je nodig?</h2>
+            <div class="requirements">
+                <div class="requirement">
+                    <div class="icon">💻</div>
+                    <strong>Chrome Browser</strong>
+                    <p>Of Edge/Opera</p>
+                </div>
+                <div class="requirement">
+                    <div class="icon">🔌</div>
+                    <strong>USB-C Kabel</strong>
+                    <p>Data-capable</p>
+                </div>
+                <div class="requirement">
+                    <div class="icon">⚡</div>
+                    <strong>ESP32-S3</strong>
+                    <p>Van je LEGO Game Boy kit</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>ℹ️ Let op:</strong> Deze flasher werkt alleen in Chrome, Edge of Opera browsers vanwege WebSerial API ondersteuning.
+            </div>
+
+            <h2>Installatie stappen</h2>
+            
+            <div class="step">
+                <h3><span class="step-number">1</span> Sluit ESP32-S3 aan</h3>
+                <p>Verbind je ESP32-S3 via USB-C kabel met je computer. Zorg dat het een data-kabel is (niet alleen opladen).</p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">2</span> Klik op Flash Firmware</h3>
+                <p>Klik op de knop hieronder en selecteer de juiste COM-poort wanneer je browser daarom vraagt.</p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">3</span> Wacht op voltooiing</h3>
+                <p>Het flashen duurt ongeveer 1-2 minuten. De ESP32 herstart automatisch wanneer het klaar is.</p>
+            </div>
+
+            <div class="flash-section">
+                <h2>Klaar om te beginnen?</h2>
+                <p style="margin: 20px 0;">Sluit je ESP32-S3 aan en klik op de knop</p>
+                
+                <esp-web-install-button manifest="./manifest.json">
+                    <button slot="activate">⚡ Flash Firmware</button>
+                </esp-web-install-button>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Belangrijk:</strong> Alle bestaande data op de ESP32-S3 wordt gewist tijdens het flashen. Zorg dat je een backup hebt als je eigen aanpassingen hebt gemaakt.
+            </div>
+
+            <h2>Problemen?</h2>
+            <div class="step">
+                <h3>ESP32 niet gevonden?</h3>
+                <p>• Controleer of je USB-kabel data ondersteunt (niet alleen opladen)<br>
+                   • Probeer een andere USB poort<br>
+                   • Installeer CH340 of CP2102 drivers als je deze nog niet hebt</p>
+            </div>
+
+            <div class="step">
+                <h3>Flash mislukt?</h3>
+                <p>• Houd de BOOT knop ingedrukt terwijl je de USB aansluit<br>
+                   • Probeer opnieuw te flashen<br>
+                   • Check of je de juiste browser gebruikt (Chrome/Edge/Opera)</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ by <a href="https://www.0v1tech.nl" target="_blank">0v1Tech</a></p>
+            <p>Vragen? Check mijn <a href="https://youtube.com/@0v1Tech" target="_blank">YouTube kanaal</a></p>
+        </div>
+    </div>
+</body>
+</html>
